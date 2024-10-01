@@ -54,6 +54,7 @@ while True:
     print(val_pot)
     time.sleep(0.2)
 ///////////////////////////////////////////////////////////////////////////
+CODE POT LED PWM
 from pyb import Pin, ADC, Timer
 import time
 
