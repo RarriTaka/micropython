@@ -1,3 +1,4 @@
+CODE LED
 import pyb
 
 led_bleue=pyb.LED(4)
@@ -10,6 +11,7 @@ while True:
     switch.callback(on_off)
 
 ///////////////////////////////////////////////////////////////////////////
+CODE DOUBLE LED
 from pyb import Timer, Pin, ADC
 import time
 
@@ -22,6 +24,7 @@ while True:
     my_pin.low()
     time.sleep(1)
 ///////////////////////////////////////////////////////////////////////////
+CODE DIMMAGE LED
 from pyb import Timer, Pin, ADC
 import time
 
@@ -39,3 +42,29 @@ while True:
         channel_bleu.pulse_width_percent(100-i)
         channel_rouge.pulse_width_percent(i)
         time.sleep(0.1)
+///////////////////////////////////////////////////////////////////////////
+CODE POTENTIOMETRE
+from pyb import Pin, ADC
+import time
+
+pot=pyb.ADC( 'Y12' )
+
+while True:
+    val_pot=pot.read()
+    print(val_pot)
+    time.sleep(0.2)
+///////////////////////////////////////////////////////////////////////////
+from pyb import Pin, ADC, Timer
+import time
+
+pot=pyb.ADC( 'Y12' )
+timmer = pyb.Timer(4, freq=500)
+channel = timmer.channel(2, Timer.PWM, pin=Pin('X10'), pulse_width_percent=100)
+
+while True:
+    val_pot=pot.read()
+    val_pot=(val_pot/4096)*100
+    print(val_pot)
+    channel.pulse_width_percent(val_pot)
+    time.sleep(0.2)
+///////////////////////////////////////////////////////////////////////////
