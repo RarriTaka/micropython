@@ -69,3 +69,79 @@ while True:
     channel.pulse_width_percent(val_pot)
     time.sleep(0.2)
 ///////////////////////////////////////////////////////////////////////////
+CODE PIEZO V1
+from pyb import Pin, ADC, Timer
+import time
+
+timmer = pyb.Timer(5, freq=440)
+channel = timmer.channel(3, Timer.PWM, pin=Pin('X1'), pulse_width_percent=30)
+timmer.freq(261.63)
+time.sleep(0.5)
+timmer.freq(293.66)
+time.sleep(0.5)
+timmer.freq(329.63)
+time.sleep(0.5)
+timmer.freq(261.63)
+time.sleep(0.5)
+timmer.freq(261.63)
+time.sleep(0.5)
+timmer.freq(293.66)
+time.sleep(0.5)
+timmer.freq(329.63)
+time.sleep(0.5)
+timmer.freq(349.23)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(329.63)
+time.sleep(0.5)
+timmer.freq(349.23)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(440)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(440)
+time.sleep(0.5)
+timmer.freq(392.00)
+time.sleep(0.5)
+timmer.freq(493.88)
+time.sleep(0.5)
+timmer.freq(392)
+time.sleep(0.5)
+timmer.freq(493.88)
+time.sleep(0.5)
+timmer.freq(493.88)
+time.sleep(0.5)
+timmer.freq(392)
+time.sleep(0.5)
+timmer.freq(493.88)
+time.sleep(0.5)
+///////////////////////////////////////////////////////////////////////////
+CODER PIEZO V2
+from pyb import Pin, ADC, Timer
+import time
+
+def pause():
+    channel.pulse_width_percent(0)
+    time.sleep(0.1)
+    channel.pulse_width_percent(100)
+
+def note(freq, duree):
+    dict_temps={"croche":0.25,"noire":0.5,"blanche":1}
+    dict_freq={"Do":262,"Re":294,"Mi":330,"Fa":349,"Sol"392,"La":440,"Si":494}
+    duree=dict_temps[temps]
+    timmer.freq(freq)
+    time.sleep(duree)
+    pause()
+    
+joue("La","noire")
+joue("La","noire")
+joue("Re","noire")
+///////////////////////////////////////////////////////////////////////////
