@@ -145,3 +145,18 @@ joue("La","noire")
 joue("La","noire")
 joue("Re","noire")
 ///////////////////////////////////////////////////////////////////////////
+CODE TM1637 NOMBRE
+import tm1637
+import time
+display = tm1637.TM1637(clk=pyb.Pin('X7'), dio=pyb.Pin('X6'))
+
+for i in range(501):
+    display.number(i)
+    time.sleep(0.01)
+    
+time.sleep(2)
+
+for i in range(501):
+    display.number(501-i)
+    time.sleep(0.01)0
+/////////////////////////////////////////////////////////////////////////
