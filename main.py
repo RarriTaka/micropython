@@ -160,3 +160,17 @@ for i in range(501):
     display.number(501-i)
     time.sleep(0.01)0
 /////////////////////////////////////////////////////////////////////////
+CODE TEMPERATURE
+from pyb import Pin, ADC
+import time
+import tm1637
+
+TMP36 = pyb.ADC( 'Y6' )
+display = tm1637.TM1637(clk=pyb.Pin('X7'), dio=pyb.Pin('X6'))
+
+while True:
+    valeur_lue = TMP36.read()
+    temperature=((valeur_lue/4096)*330)-50
+    print(temperature)
+    display.number(temperature)
+    time.sleep(1)
