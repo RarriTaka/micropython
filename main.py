@@ -174,3 +174,27 @@ while True:
     print(temperature)
     display.number(temperature)
     time.sleep(1)
+//////////////////////////////////////////////////////////////////////////
+CODE EXAMEN BROUILLON
+from pyb import Pin, ADC, Timer
+import time
+
+pot=pyb.ADC( 'Y12' )
+timmer = pyb.Timer(4, freq=500)
+channel_rouge = timmer.channel(2, Timer.PWM, pin=Pin('X10'), pulse_width_percent=100)
+
+timmer = pyb.Timer(4, freq=500)
+channel_bleu = timmer.channel(2, Timer.PWM, pin=Pin('X10'), pulse_width_percent=100)
+
+timmer = pyb.Timer(4, freq=500)
+channel_jaune = timmer.channel(2, Timer.PWM, pin=Pin('X10'), pulse_width_percent=100)
+
+while True:
+    val_pot=pot.read()
+    val_pot=(val_pot/4096)*100
+    print(val_pot)
+    channel_rouge.pulse_width_percent(val_pot)
+    channel_rouge.pulse_width_percent(val_pot-channel_rouge.pulse_width_percent)
+    channel_rouge.pulse_width_percent(val_pot-channel_bleu.pulse_width_percent)
+    time.sleep(0.2)
+//////////////////////////////////////////////////////////////////////////////
