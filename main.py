@@ -198,3 +198,42 @@ while True:
     channel_rouge.pulse_width_percent(val_pot-channel_bleu.pulse_width_percent)
     time.sleep(0.2)
 //////////////////////////////////////////////////////////////////////////////
+CODE EXAMEN MAISON
+from pyb import Pin, ADC, Timer
+import time
+
+pot = ADC('Y12')
+
+limite_rouge = 2000 
+limite_bleu = 1500 
+limite_jaune = 1000 
+
+timer_rouge = Timer(4, freq=500)
+channel_rouge = timer_rouge.channel(1, Timer.PWM, pin=Pin('X10'), pulse_width_percent=0)
+
+timer_bleu = Timer(4, freq=500)
+channel_bleu = timer_bleu.channel(2, Timer.PWM, pin=Pin('X11'), pulse_width_percent=0)
+
+timer_jaune = Timer(4, freq=500)
+channel_jaune = timer_jaune.channel(3, Timer.PWM, pin=Pin('X12'), pulse_width_percent=0)
+
+duree = 0.1
+
+while True:
+    val_pot = pot.read()
+    
+    if val_pot > limite_rouge:
+        channel_rouge.pulse_width_percent(100)
+    else:
+        channel_rouge.pulse_width_percent(0)
+    
+    if val_pot > limite_bleu:
+        channel_bleu.pulse_width_percent(100)
+    else:
+        channel_bleu.pulse_width_percent(0)
+    
+    if val_pot > limite_jaune:
+        channel_jaune.pulse_width_percent(100)
+    else:
+        channel_jaune.pulse_width_percent(0)
+////////////////////////////////////////////////////////////////////////////
