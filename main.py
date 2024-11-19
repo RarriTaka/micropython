@@ -237,3 +237,31 @@ while True:
     else:
         channel_jaune.pulse_width_percent(0)
 ////////////////////////////////////////////////////////////////////////////
+CODE EXAMEN FINAL
+from pyb import Pin, ADC, Timer
+import time
+
+pot = pyb.ADC('Y12')
+
+timmer_rouge = pyb.Timer(4, freq=500)
+channel_rouge = timmer_rouge.channel(2, Timer.PWM, pin=Pin('X10'), pulse_width_percent=100)
+
+timmer_bleu = pyb.Timer(3, freq=500)
+channel_bleu = timmer_bleu.channel(2, Timer.PWM, pin=Pin('X8'), pulse_width_percent=100)
+
+timmer_jaune = pyb.Timer(5, freq=500)
+channel_jaune = timmer_jaune.channel(2, Timer.PWM, pin=Pin('X4'), pulse_width_percent=100)
+
+while True:
+    val_pot=pot.read()
+    val_pot=(val_pot/4096)*100
+    print(val_pot)
+    time.sleep(0.2)
+    if val_pot<50:
+       channel_rouge.pulse_width_percent(0)
+       channel_bleu.pulse_width_percent(0)
+       channel_jaune.pulse_width_percent(0)
+    else:
+       channel_rouge.pulse_width_percent(val_pot)
+       channel_bleu.pulse_width_percent(val_pot)
+       channel_jaune.pulse_width_percent(val_pot)
