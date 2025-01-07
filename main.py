@@ -265,3 +265,25 @@ while True:
        channel_rouge.pulse_width_percent(val_pot)
        channel_bleu.pulse_width_percent(val_pot)
        channel_jaune.pulse_width_percent(val_pot)
+////////////////////////////////////////////////////////////////////////////
+TEST CODE CAPTEUR PHOTORESISTANCE
+from pyb import Pin, ADC, Timer
+import time
+import tm1637
+
+ldr = pyb.ADC('X19')
+display = tm1637.TM1637(clk=pyb.Pin('X10'), dio=pyb.Pin('X11'))
+my_pin = pyb.Pin( 'X1', pyb.Pin.OUT_PP)
+
+while True:
+    lumiere = ldr.read()
+    lumiere=(lumiere/4096)*100
+    lumiere=int(lumiere)
+    time.sleep(0.5)
+    print(lumiere)
+    display.number(lumiere)
+    
+    if lumiere > 60:
+     my_pin.off()
+    else:
+        my_pin.on()
