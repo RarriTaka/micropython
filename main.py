@@ -312,3 +312,34 @@ while True:
     print("Lum : ",lumiere)
     print("Pot : ",val_pot)
     time.sleep(0.5)
+////////////////////////////////////////////////////////////////////////////////
+from pyb import Pin, ADC, Timer
+from time import sleep
+from ultrasonic import Ultrasonic
+
+timmer = pyb.Timer(2 , freq=440)
+channel = timmer.channel(1, Timer.PWM, pin=Pin('X6'), pulse_width_percent=10)
+
+TRIGGER_PIN = pyb.Pin.board.X1
+
+ECHO_PIN = pyb.Pin.board.X2
+
+sr04 = Ultrasonic( TRIGGER_PIN, ECHO_PIN )
+
+
+
+def beep():
+    channel.pulse_width_percent(60)
+    sleep(0.5)
+    channel.pulse_width_percent(0)
+    sleep(1)
+    
+while True:
+    try:
+        distance=sr04.distance_in_cm()
+    except:
+        pass
+    print(distance)
+    if distance<50:
+        beep()
+    sleep(0.1)
