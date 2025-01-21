@@ -287,3 +287,28 @@ while True:
      my_pin.off()
     else:
         my_pin.on()
+//////////////////////////////////////////////////////////////////////////////
+BROUILLON LED PHOTORESISTANCE
+from pyb import Pin, ADC, Timer
+import time
+
+ldr = pyb.ADC('X8')
+pot = pyb.ADC('X19')
+led = pyb.Pin( 'X1', pyb.Pin.OUT_PP)
+
+while True:
+    lumiere = ldr.read()
+    lumiere=(lumiere/4096)*100
+    lumiere=int(lumiere)
+    val_pot = pot.read()
+    val_pot=(val_pot/4096)*100
+    val_pot=int(val_pot)
+    
+    if lumiere<50:
+        led.on()
+    else:
+        led.off()
+    
+    print("Lum : ",lumiere)
+    print("Pot : ",val_pot)
+    time.sleep(0.5)
