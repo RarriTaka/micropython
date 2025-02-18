@@ -343,3 +343,48 @@ while True:
     if distance<50:
         beep()
     sleep(0.1)
+///////////////////////////////////////////////////////////////////////////
+CODE CAPTEUR DE DISTANCE
+from time import sleep, ticks_ms, ticks_diff
+from Ultrasonic import Ultrasonic
+from pyb import Timer, Pin
+
+#broche poue déclencher le senseur
+TRIGGER_PIN = pyb.Pin.board.X1
+#broche pour attendre le retour d'écho
+ECHO_PIN = pyb.Pin.board.X2
+#creation de l'objet sr04
+sr04 = Ultrasonic(TRIGGER_PIN, ECHO_PIN)
+
+#creation du piezo
+timmer = pyb.Timer(1, freq=440)
+channel = timmer.channel(1, Timer.PWM, pin=Pin('X8'), pulse_width_percent=0)
+
+def beep():
+    channel.pulse_width_percent(100)
+    sleep(0.5)
+    channel.pulse_width_percent(0)
+
+def pause():
+    start=ticks_ms() #on mesure à quel moment la fonction pause se met en route
+    while True:
+        try:
+            distance=sr04.distance_in_cm()
+        except:
+            distance=10000
+        duree_pause=distance/100
+        temps_final=ticks_ms()
+        delta_temps=ticks_diff(temps_final,start)
+        if delta_temps>duree_pause*1000:
+            break
+    
+
+while True:
+    try:
+        distance=sr04.distance_in_cm()
+        print("Distance : ",distance)
+    except:
+        pass
+    beep()
+    pause()
+///////////////////////////////////////////////////////////////////////////////
