@@ -388,3 +388,41 @@ while True:
     beep()
     pause()
 ///////////////////////////////////////////////////////////////////////////////
+CODE PHOTORESISTANCE TEMPERATURE
+from pyb import Pin, ADC, Timer
+import pyb
+import time
+import tm1637
+
+ldr = pyb.ADC('X19')
+TMP36 = pyb.ADC( 'X2' )
+display = tm1637.TM1637(clk=pyb.Pin('X7'), dio=pyb.Pin('X6'))
+my_pin = pyb.Pin( 'X1', pyb.Pin.OUT_PP)
+btn = pyb.Pin( 'Y9', pyb.Pin.IN, pull=pyb.Pin.PULL_UP )
+device = 0
+#Quand "device = 0" on affiche la lumière et quand "device = 1" on affiche la température
+
+while True:
+    lumiere = ldr.read()
+    lumiere=(lumiere/4096)*100
+    lumiere=int(lumiere)
+    time.sleep(0.5)
+    print(lumiere)
+    display.number(lumiere)
+    valeur_lue = TMP36.read()
+    temp=((valeur_lue/4096)*330)-50
+    temp=int(temp)
+    print(temp)
+    display.number(temp)
+    time.sleep(0.5)
+    if lumiere > 60:
+     my_pin.off()
+    else:
+        my_pin.on()
+    if btn.value() == 0:
+       pyb.delay(500)
+       if device == 0:
+           device = 1
+       else:
+           display.number(temp)
+           device = 0
