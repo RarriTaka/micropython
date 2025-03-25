@@ -449,3 +449,39 @@ while True :
     servo2.angle(angle2)
     pyb.delay(100)
 /////////////////////////////////////////////////////////////////////////////////////////
+CODE EXAMEN BROUILLON
+from pyb import Pin, ADC, Timer
+import time
+import tm1637
+
+ldr = pyb.ADC('X19')
+display = tm1637.TM1637(clk=pyb.Pin('X10'), dio=pyb.Pin('X11'))
+my_pin = pyb.Pin( 'X1', pyb.Pin.OUT_PP)
+
+timmer_1 = pyb.Timer(5, freq=550)
+channel = timmer_1.channel(3, Timer.PWM, pin=Pin('X1'), pulse_width_percent=30)
+time.sleep(0.5)
+
+timmer_2 = pyb.Timer(5, freq=440)
+channel = timmer_2.channel(3, Timer.PWM, pin=Pin('X1'), pulse_width_percent=30)
+time.sleep(0.5)
+
+timmer_3 = pyb.Timer(5, freq=330)
+channel = timmer_3.channel(3, Timer.PWM, pin=Pin('X1'), pulse_width_percent=30)
+time.sleep(0.5)
+   
+while True:
+    lumiere = ldr.read()
+    lumiere=(lumiere/4096)*100
+    lumiere=int(lumiere)
+    time.sleep(0.5)
+    print(lumiere)
+    display.number(lumiere)
+    
+    if lumiere > 90:
+        timmer_1.on()
+    else:
+        timmer_2.on()
+        
+    if lumiere < 50:
+        timmer_3.on()
