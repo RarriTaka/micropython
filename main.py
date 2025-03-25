@@ -426,3 +426,26 @@ while True:
        else:
            display.number(temp)
            device = 0
+//////////////////////////////////////////////////////////////////////////////////////////
+CODE SERVO
+#on branche le servo sur X1
+servo1 = pyb.Servo(1)
+servo2 = pyb.Servo(2)                               
+
+servo1.angle(0)#l'angle peut varier entre -90 et +90
+servo2.angle(0)
+
+vertical = pyb.ADC('A0') 
+horizontal= pyb.ADC('A1')
+while True :
+    x=vertical.read()
+    y=horizontal.read()
+    print("X : ",x," ; ","Y : ",y)
+    
+    angle1=((x/4095)*180)-90
+    servo1.angle(angle1)
+    
+    angle2=((y/4095)*180)-90
+    servo2.angle(angle2)
+    pyb.delay(100)
+/////////////////////////////////////////////////////////////////////////////////////////
