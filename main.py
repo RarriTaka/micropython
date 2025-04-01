@@ -485,3 +485,49 @@ while True:
         
     if lumiere < 50:
         timmer_3.on()
+////////////////////////////////////////////////////////////////////////////////////////////////////
+CODE EXAMEN 2 NOTE 8/12    
+from time import sleep, ticks_ms, ticks_diff
+from Ultrasonic import Ultrasonic
+from pyb import Timer, Pin, ADC
+import tm1637
+
+TRIGGER_PIN = pyb.Pin.board.X1
+ECHO_PIN = pyb.Pin.board.X2
+sr04 = Ultrasonic(TRIGGER_PIN, ECHO_PIN)
+
+display = tm1637.TM1637(clk=pyb.Pin('X8'), dio=pyb.Pin('X7'))
+
+timer = pyb.Timer(5, freq=500)
+channel = timer.channel(1, Timer.PWM, pin=Pin('X3'), pulse_width_percent=100)
+
+def pause():
+    start=ticks_ms()
+    while True:
+        try:
+            distance=sr04.distance_in_cm()
+        except:
+            distance=10000
+        duree_pause=distance/100
+        temps_final=ticks_ms()
+        delta_temps=ticks_diff(temps_final,start)
+        display.number(int(duree_pause))
+        if delta_temps>duree_pause*1000:
+            break
+    
+
+while True:
+    distance=sr04.distance_in_cm()
+    if distance<20:
+        channel.pulse_width_percent(100)
+    if distance>100:
+        channel.pulse_width_percent(0)
+    if 100>distance>20:
+        channel.pulse_width_percent(distance)
+    try:
+        distance=sr04.distance_in_cm()
+        print("Distance : ",distance)
+        display.number(int(sr04.distance_in_cm))
+    except:
+        distance=100
+        sleep(0.5)
