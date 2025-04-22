@@ -532,3 +532,22 @@ while True:
         distance=100
         sleep(0.5)
 ////////////////////////////////////////////////////////////////////////////////
+CODE MOTEUR
+from pyb import Timer, Pin
+import time
+
+moteur_gauche1 = pyb.Pin('X1', pyb.Pin.OUT_PP)
+moteur_gauche2 = pyb.Pin('X2', pyb.Pin.OUT_PP)
+
+moteur_gauche1.high()
+moteur_gauche2.low()
+
+time.sleep(5)
+
+moteur_gauche1.low()
+moteur_gauche2.high()
+
+time.sleep(5)
+
+moteur_gauche1.low()
+moteur_gauche2.low()
