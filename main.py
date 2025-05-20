@@ -551,3 +551,40 @@ time.sleep(5)
 
 moteur_gauche1.low()
 moteur_gauche2.low()
+//////////////////////////////////////////////////////////////////////////////////
+CODE DOUBLE MOTEUR
+from pyb import Timer, Pin
+import time
+
+moteur_gauche1 = pyb.Pin('X1', pyb.Pin.OUT_PP)
+moteur_gauche2 = pyb.Pin('X2', pyb.Pin.OUT_PP)
+
+moteur_gauche1.high()
+moteur_gauche2.low()
+
+time.sleep(5)
+
+moteur_gauche1.low()
+moteur_gauche2.high()
+
+time.sleep(5)
+
+moteur_gauche1.low()
+moteur_gauche2.low()
+
+moteur_droit1 = pyb.Pin('X5', pyb.Pin.OUT_PP)
+moteur_droit2 = pyb.Pin('X6', pyb.Pin.OUT_PP)
+
+moteur_droit1.high()
+moteur_droit2.low()
+
+time.sleep(5)
+
+moteur_droit1.low()
+moteur_droit2.high()
+
+time.sleep(5)
+
+moteur_droit1.low()
+moteur_droit2.low()
+///////////////////////////////////////////////////////////////////////////////////
