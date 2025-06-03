@@ -641,3 +641,11 @@ if __name__=="__main__":
     recule(5000)
     stop()
 //////////////////////////////////////////////////////////////////////////
+CODE CARRE VOITURE
+def carre():
+    for i in range (4):
+        avance(1000)
+        stop(500)
+        tourne_droite(500)
+        stop(500)
+carre()
